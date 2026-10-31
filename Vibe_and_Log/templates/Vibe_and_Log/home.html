@@ -1,0 +1,22 @@
+{% extends "Vibe_and_Log/base.html" %}
+{% block body_class %}home{% endblock %}
+{% block content %}
+  <section class="hero">
+    <h1>Welcome in</h1>
+    <p>A quiet corner for what I'm learning, and what I think about it.</p>
+  </section>
+
+  <section class="postcards">
+    {% for post in posts %}
+      <a class="postcard" href="{% url 'post_details' post.slug %}">
+        <span class="stamp">&#10022;</span>
+        <p class="postcard-date">{{ post.created_at|date:"d M Y" }}</p>
+        <h2>{{ post.title }}</h2>
+        <p class="excerpt">{{ post.body|truncatewords:28 }}</p>
+        <span class="read-more">Read this letter &rarr;</span>
+      </a>
+    {% empty %}
+      <p class="empty">No letters yet. The first one is on its way.</p>
+    {% endfor %}
+  </section>
+{% endblock %}
