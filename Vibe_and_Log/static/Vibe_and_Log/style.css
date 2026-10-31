@@ -15,6 +15,7 @@ body {
   line-height: 1.8;
 }
 body.home {
+    min-height: 100vh;
   background:
     linear-gradient(rgba(243, 233, 220, 0.55), rgba(243, 233, 220, 0.75)),
     url('images/home-bg.jpg') center / cover no-repeat;
