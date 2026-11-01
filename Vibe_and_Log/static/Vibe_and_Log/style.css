@@ -1,11 +1,15 @@
 :root {
   --cream: #F3E9DC;
+  --paper: #F7EDDF;
+  --liner: #EAD6C0;
   --sand: #DCC5B2;
-  --blush: #E8B4A0;
   --caramel: #D9A86C;
+  --terracotta: #B9573B;
   --rust: #9C4A30;
   --brown: #4A3426;
 }
+
+html { background: var(--cream); color-scheme: light; }
 
 body {
   margin: 0;
@@ -15,66 +19,106 @@ body {
   line-height: 1.8;
 }
 body.home {
-    min-height: 100vh;
+  min-height: 100vh;
   background:
     linear-gradient(rgba(243, 233, 220, 0.55), rgba(243, 233, 220, 0.75)),
-    url('images/home-bg.jpg') center / cover no-repeat;
+    url('images/home-bg.jpg') center / cover no-repeat var(--cream);
 }
 
 a { color: var(--rust); }
 h1, h2 { font-family: 'Cormorant Garamond', Georgia, serif; line-height: 1.25; }
 
-.site-header {
-  display: flex; justify-content: space-between; align-items: baseline;
-  padding: 18px 24px;
-}
-.site-name {
-  font-family: 'Pinyon Script', cursive; font-size: 2.2rem;
-  color: var(--brown); text-decoration: none;
-}
-.nav-link {
-  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
-  text-decoration: none; letter-spacing: 0.08em;
-}
+.site-header { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 24px; }
+.site-name { font-family: 'Pinyon Script', cursive; font-size: 2.2rem; color: var(--brown); text-decoration: none; }
 
 main { max-width: 700px; margin: 0 auto; padding: 24px 16px 48px; }
-body.home main { max-width: 1000px; }
+body.home main { max-width: 760px; }
+body.post main { max-width: 1200px; }
 
 .hero { text-align: center; padding: 40px 0 28px; }
 .hero h1 { font-size: 2.6rem; margin: 0 0 8px; }
 .hero p { margin: 0; font-size: 1.1rem; }
 
-.postcards { display: grid; grid-template-columns: 1fr; gap: 28px; }
-@media (min-width: 720px) { .postcards { grid-template-columns: 1fr 1fr; } }
-
-.postcard {
-  position: relative; display: block; text-decoration: none; color: var(--brown);
-  background: rgba(255, 250, 242, 0.93);
-  border: 1px solid var(--sand);
-  outline: 1px dashed var(--caramel); outline-offset: -10px;
-  padding: 28px 26px;
-  box-shadow: 0 6px 18px rgba(74, 52, 38, 0.15);
-  transform: rotate(-0.8deg);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+/* Home: mailbox rows */
+.mailbox { display: flex; flex-direction: column; gap: 14px; }
+.mail-row {
+  display: flex; align-items: center; gap: 18px;
+  padding: 14px 20px; text-decoration: none; color: var(--brown);
+  background: rgba(255, 250, 242, 0.92);
+  border: 1px solid var(--sand); border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(74, 52, 38, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.postcard:nth-child(even) { transform: rotate(0.8deg); }
-.postcard:hover, .postcard:focus-visible {
-  transform: rotate(0) translateY(-3px);
-  box-shadow: 0 10px 24px rgba(74, 52, 38, 0.2);
+.mail-row:hover, .mail-row:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(74, 52, 38, 0.18);
 }
-.postcard h2 { margin: 4px 0 8px; font-size: 1.6rem; }
-.postcard-date { margin: 0; font-size: 0.9rem; font-style: italic; color: var(--rust); }
-.excerpt { margin: 0 0 12px; }
-.read-more { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--rust); }
-.stamp {
-  position: absolute; top: 14px; right: 16px; width: 34px; height: 40px;
-  display: flex; align-items: center; justify-content: center;
-  border: 2px dashed var(--caramel); color: var(--caramel); font-size: 1rem;
-}
+.mail-icon { width: 56px; height: 56px; border-radius: 14px; flex-shrink: 0; }
+.mail-text { display: flex; flex-direction: column; }
+.mail-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; line-height: 1.2; }
+.mail-date { font-size: 0.85rem; font-style: italic; color: var(--rust); }
 .empty { text-align: center; }
+
+/* Post page: letter on the left, bigger painting on the right (about 65 / 35) */
+.post-layout { display: grid; grid-template-columns: 1.85fr 1fr; gap: 36px; align-items: start; }
+.back-link { display: inline-block; margin-bottom: 14px; text-decoration: none; font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; }
+
+/* Envelope: terracotta outside, open flap, cream inside */
+.envelope {
+  --flap: 90px;
+  position: relative;
+  margin-top: calc(var(--flap) + 4px);
+  background: var(--terracotta);
+  border-radius: 8px;
+  padding: 22px 22px 28px;
+  filter: drop-shadow(0 10px 18px rgba(74, 52, 38, 0.3));
+}
+.envelope::before {            /* the open flap, terracotta */
+  content: "";
+  position: absolute; left: 0; right: 0;
+  top: calc(-1 * var(--flap)); height: var(--flap);
+  background: var(--terracotta);
+  clip-path: polygon(0 100%, 100% 100%, 50% 0);
+}
+.envelope::after {             /* the inside of the flap, cream-beige */
+  content: "";
+  position: absolute; left: 30px; right: 30px;
+  top: calc(-1 * var(--flap) + 20px); height: calc(var(--flap) - 20px);
+  background: var(--liner);
+  clip-path: polygon(0 100%, 100% 100%, 50% 0);
+}
+.letter {
+  position: relative;
+  background: var(--paper);
+  color: var(--brown);
+  border-radius: 4px;
+  padding: 40px 44px;
+  box-shadow: inset 0 0 0 1px rgba(156, 74, 48, 0.2);
+}
+.letter-date { margin: 0; font-style: italic; color: var(--rust); }
+.letter h1 { margin: 4px 0 18px; font-size: 2.4rem; color: var(--brown); }
+.letter-body p { margin: 0 0 1em; }
+.signature { margin: 24px 0 0; text-align: right; font-family: 'Pinyon Script', cursive; font-size: 1.8rem; }
+
+.painting { position: sticky; top: 24px; }
+.painting img {
+  display: block; width: 100%; height: auto;
+  max-height: calc(100vh - 56px); object-fit: cover; object-position: center;
+  border: 6px solid var(--paper); border-radius: 4px;
+  box-shadow: 0 8px 22px rgba(74, 52, 38, 0.2);
+}
 
 .site-footer { text-align: center; padding: 24px; font-style: italic; font-size: 0.95rem; }
 
+@media (max-width: 800px) {
+  .post-layout { grid-template-columns: 1fr; }
+  .painting { order: -1; position: static; }
+  .painting img { height: 200px; max-height: none; }
+  .envelope { --flap: 60px; padding: 14px 14px 20px; }
+  .envelope::after { left: 20px; right: 20px; top: calc(-1 * var(--flap) + 14px); height: calc(var(--flap) - 14px); }
+  .letter { padding: 28px 22px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .postcard { transition: none; }
+  .mail-row { transition: none; }
 }
