@@ -1,7 +1,7 @@
 {% extends "Vibe_and_Log/base.html" %}
 {% load static %}
 {% block title %}{{ post.title }}{% endblock %}
-{% block body_class %}post{% endblock %}
+{% block body_class %}<b>post</b>{% endblock %}
 {% block content %}
   <div class="post-layout">
     <div class="post-main">
@@ -11,13 +11,9 @@
           <p class="letter-date">{{ post.created_at|date:"d F Y" }}</p>
           <h1>{{ post.title }}</h1>
           <div class="letter-body">{{ post.body|linebreaks }}</div>
-          <p class="signature">Vibe &amp; Log</p>
+          <p class="signature">Shagun Guru</p>
         </div>
       </article>
     </div>
-
-    <aside class="painting">
-      <img src="{% static 'Vibe_and_Log/images/painting.jpg' %}" alt="Watercolor and ink painting of a bouquet of flowers in a vase">
-    </aside>
   </div>
 {% endblock %}

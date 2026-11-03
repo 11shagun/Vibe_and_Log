@@ -8,14 +8,18 @@
   <title>{% block title %}Vibe &amp; Log{% endblock %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Lora:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'Vibe_and_Log/style.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Lora:wght@400;500&family=Pinyon+Script&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">  <link rel="stylesheet" href="{% static 'Vibe_and_Log/style.css' %}">
 </head>
-<body class="{% block body_class %}{% endblock %}">
+<body class="has-bg {% block body_class %}{% endblock %}">
   <header class="site-header">
-    <a class="site-name" href="{% url 'home' %}">Vibe &amp; Log</a>
+    <a class="site-name" href="{% url 'home' %}"><b>Vibe &amp; Log</b></a>
   </header>
+  <nav class="site-nav">
+    <a href="{% url 'home' %}#posts">Posts</a>
+    <a href="{% url 'home' %}#about">About</a>
+  </nav>
   <main>{% block content %}{% endblock %}</main>
-  <footer class="site-footer">Written slowly, with tea.</footer>
+  {% block after_main %}{% endblock %}
+  <footer class="site-footer"><b>Written slowly, with tea.</b></footer>
 </body>
 </html>

@@ -1,13 +1,13 @@
 {% extends "Vibe_and_Log/base.html" %}
 {% load static %}
 {% block body_class %}home{% endblock %}
+
 {% block content %}
-  <section class="hero">
-    <h1>Welcome in</h1>
+  <section class="intro">
     <p>A quiet corner for what I'm learning, and what I think about it.</p>
   </section>
 
-  <section class="mailbox">
+  <section class="posts-column" id="posts">
     {% for post in posts %}
       <a class="mail-row" href="{% url 'post_details' post.slug %}">
         <img class="mail-icon" src="{% static 'Vibe_and_Log/images/mail-icon.jpg' %}" alt="">
@@ -17,7 +17,21 @@
         </span>
       </a>
     {% empty %}
-      <p class="empty">No letters yet. The first one is on its way.</p>
+      <p class="empty">No posts yet. The first one is on its way.</p>
     {% endfor %}
+  </section>
+{% endblock %}
+
+{% block after_main %}
+  <section class="about-band" id="about">
+    <div class="about-inner">
+      <h2><b>About</b></h2>
+      <p>Hi, I'm YOUR NAME, a final-year CSE student learning machine learning and building projects in public.The insert() function adds a key-value pair to the map. If the key already exists, the new pair is not inserted.</p>
+      <div class="contact-links">
+        <a href="mailto:YOUR-EMAIL">Email</a>
+        <a href="YOUR-LINKEDIN-URL">LinkedIn</a>
+        <a href="YOUR-GITHUB-URL">GitHub</a>
+      </div>
+    </div>
   </section>
 {% endblock %}

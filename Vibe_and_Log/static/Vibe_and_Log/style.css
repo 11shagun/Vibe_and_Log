@@ -3,89 +3,146 @@
   --paper: #F7EDDF;
   --liner: #EAD6C0;
   --sand: #DCC5B2;
-  --caramel: #D9A86C;
   --terracotta: #B9573B;
   --rust: #9C4A30;
   --brown: #4A3426;
+  --block: #44280A;
+  --block-hover: #55350F;
+  --block-text: #F3E6D3;
+  --block-accent: #E8A07A;
 }
 
-html { background: var(--cream); color-scheme: light; }
+/* Hide scrollbar while keeping the page fully scrollable and dynamic */
+html { 
+  background: var(--cream); 
+  color-scheme: light; 
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
 
-body {
-  margin: 0;
-  font-family: 'Lora', Georgia, serif;
-  color: var(--brown);
-  background: var(--cream);
-  line-height: 1.8;
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
-body.home {
-  min-height: 100vh;
-  background:
-    linear-gradient(rgba(243, 233, 220, 0.55), rgba(243, 233, 220, 0.75)),
-    url('/static/Vibe_and_Log/images/home-bg.jpg') center / cover no-repeat var(--cream);
+
+body.has-bg {
+  background: transparent;
+  display: flex; flex-direction: column; min-height: 100vh;
 }
+body.has-bg::before {
+  content: "";
+  position: fixed; inset: 0; z-index: -1;
+  background: url('/static/Vibe_and_Log/images/home-bg.jpg') center / cover no-repeat var(--cream);
+}
+body.has-bg main { flex: 1; }
 
 a { color: var(--rust); }
 h1, h2 { font-family: 'Cormorant Garamond', Georgia, serif; line-height: 1.25; }
 
-.site-header { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 24px; }
-.site-name { font-family: 'Pinyon Script', cursive; font-size: 2.2rem; color: var(--brown); text-decoration: none; }
+/* Header and nav (two thin lines, like the wireframe) */
+.site-header, .site-nav, main {
+  width: min(1400px, calc(100% - 8px));
+  margin-left: auto; margin-right: auto;
+}
+.site-header { padding: 10px 0 6px; border-bottom: 1px solid rgba(68, 40, 10, 0.55); }
+.site-name {
+  font-family: 'Pinyon Script', cursive; font-size: 2.3rem; line-height: 1.2;
+  color: var(--block); text-decoration: none;
+}
+.site-nav {
+  display: flex; justify-content: flex-end; gap: 28px;
+  padding: 6px 0px; border-bottom: 1px solid rgba(68, 40, 10, 0.55);
+}
+.site-nav a {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; letter-spacing: 0.06em;
+  text-decoration: none; color: var(--block);
+}
+.site-name, .site-nav a, .intro p, .empty, .back-link,
+body:not(.home) .site-footer {
+  text-shadow: 0 0 10px rgba(243, 233, 220, 0.85);
+}
 
-main { max-width: 700px; margin: 0 auto; padding: 24px 16px 48px; }
-body.home main { max-width: 760px; }
-body.post main { max-width: 1200px; }
+main { padding: 24px 0 48px; }
 
-.hero { text-align: center; padding: 40px 0 28px; }
-.hero h1 { font-size: 2.6rem; margin: 0 0 8px; }
-.hero p { margin: 0; font-size: 1.1rem; }
+/* Home: banner */
+.intro {
+  display: flex; justify-content: flex-end; align-items: center;
+  min-height: 130px; padding: 24px 40px; margin-bottom: 36px;
+  border: 1.5px solid var(--block);
+}
+.intro p { margin: 0 8% 0 0; max-width: 360px; font-size: 1.15rem; color: var(--block); }
 
-/* Home: mailbox rows */
-.mailbox { display: flex; flex-direction: column; gap: 14px; }
+/* Home: post blocks (narrow column on the left) */
+.posts-column { display: flex; flex-direction: column; gap: 14px; width: min(340px, 100%); }
 .mail-row {
-  display: flex; align-items: center; gap: 18px;
-  padding: 14px 20px; text-decoration: none; color: var(--brown);
-  background: rgba(255, 250, 242, 0.92);
-  border: 1px solid var(--sand); border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(74, 52, 38, 0.12);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 16px; text-decoration: none; color: var(--block-text);
+  background: var(--block); border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(40, 24, 6, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 .mail-row:hover, .mail-row:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(74, 52, 38, 0.18);
+  transform: translateY(-2px); background: var(--block-hover);
+  box-shadow: 0 8px 20px rgba(40, 24, 6, 0.3);
 }
-.mail-icon { width: 56px; height: 56px; border-radius: 14px; flex-shrink: 0; }
+.mail-row:focus-visible { outline: 2px solid var(--block-accent); outline-offset: 2px; }
+.mail-icon { width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0; }
 .mail-text { display: flex; flex-direction: column; }
-.mail-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; line-height: 1.2; }
-.mail-date { font-size: 0.85rem; font-style: italic; color: var(--rust); }
-.empty { text-align: center; }
+.mail-title { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 600; line-height: 1.2; color: var(--block-text); }
+.mail-date { font-size: 0.85rem; font-style: italic; color: var(--block-accent); }
+.empty { margin: 0; color: var(--block); }
 
-/* Post page: letter on the left, bigger painting on the right (about 65 / 35) */
-.post-layout { display: grid; grid-template-columns: 1.85fr 1fr; gap: 36px; align-items: start; }
-.back-link { display: inline-block; margin-bottom: 14px; text-decoration: none; font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; }
+/* Home: About band at the bottom (reduced height by ~30%) */
+.about-band { 
+  background: var(--block); 
+  color: var(--block-text); 
+  padding: 18px 0 14px; /* Reduced vertical padding */
+}
+.about-inner { 
+  width: min(1400px, calc(100% - 3px)); 
+  margin: 0 auto; 
+}
+.about-band h2 { 
+  margin: 0 0 10px; /* Tighter margin */
+  font-size: 1.8rem; 
+  color: var(--block-text); 
+}
+.about-band p { 
+  margin: 0 0 0.6em; /* Reduced paragraph spacing */
+  max-width: 1000px; 
+}
+.contact-links { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 10px; 
+  margin-top: 4 px; /* Tighter gap above links */
+}
+.contact-links a {
+  padding: 6px 10px; /* Slightly slimmer padding */
+  border: 1px solid var(--block-accent); 
+  border-radius: 100px;
+  text-decoration: none; 
+  color: var(--block-accent);
+  font-family: 'Cormorant Garamond', serif; 
+  font-size: 1.1rem;
+}
+.contact-links a:hover, .contact-links a:focus-visible { background: var(--block-accent); color: var(--block); }
+
+.site-footer { text-align: center; padding: 14px; font-style: italic; font-size: 1.25rem; color: var(--block) }
+body.home .site-footer { background: var(--block); color: var(--block-text); padding: 0 10px 10px; }
+
+/* Post page: letter on the left, bigger painting on the right */
+.post-layout { max-width: 860px; margin: 0 auto; }
+.back-link { display: inline-block; margin-bottom: 14px; text-decoration: none; font-family: 'Cormorant Garamond', serif; font-size: 1.15rem;color: var(--block) }
 
 /* Envelope: terracotta outside, open flap, cream inside */
 .envelope {
-  --flap: 90px;
   position: relative;
-  margin-top: calc(var(--flap) + 4px);
-  background: var(--terracotta);
-  border-radius: 8px;
-  padding: 22px 22px 28px;
-  filter: drop-shadow(0 10px 18px rgba(74, 52, 38, 0.3));
-}
-.envelope::before {            /* the open flap, terracotta */
-  content: "";
-  position: absolute; left: 0; right: 0;
-  top: calc(-1 * var(--flap)); height: var(--flap);
-  background: var(--terracotta);
-  clip-path: polygon(0 100%, 100% 100%, 50% 0);
-}
-.envelope::after {             /* the inside of the flap, cream-beige */
-  content: "";
-  position: absolute; left: 30px; right: 30px;
-  top: calc(-1 * var(--flap) + 20px); height: calc(var(--flap) - 20px);
-  background: var(--liner);
-  clip-path: polygon(0 100%, 100% 100%, 50% 0);
+  margin-top: 0;
+  background: var(--rust);
+  border-radius: 2px;
+  padding: 10px 10px 12px;
+  filter: drop-shadow(0 25px 50px rgba(74, 52, 38, 0.3));
 }
 .letter {
   position: relative;
@@ -98,27 +155,20 @@ body.post main { max-width: 1200px; }
 .letter-date { margin: 0; font-style: italic; color: var(--rust); }
 .letter h1 { margin: 4px 0 18px; font-size: 2.4rem; color: var(--brown); }
 .letter-body p { margin: 0 0 1em; }
-.signature { margin: 24px 0 0; text-align: right; font-family: 'Pinyon Script', cursive; font-size: 1.8rem; }
-
-.painting { position: sticky; top: 24px; }
-.painting img {
-  display: block; width: 100%; height: auto;
-  max-height: calc(100vh - 56px); object-fit: cover; object-position: center;
-  border: 6px solid var(--paper); border-radius: 4px;
-  box-shadow: 0 8px 22px rgba(74, 52, 38, 0.2);
-}
-
-.site-footer { text-align: center; padding: 24px; font-style: italic; font-size: 0.95rem; }
+.signature { margin: 24px 0 0; text-align: right; font-family: 'Dancing Script', cursive; font-size: 1.8rem; }
 
 @media (max-width: 800px) {
+  .site-name { font-size: 1.9rem; }
+  .site-nav { gap: 20px; }
+  .intro { justify-content: flex-start; min-height: 0; padding: 20px; }
+  .intro p { margin-right: 0; max-width: none; }
+  .posts-column { width: 100%; }
   .post-layout { grid-template-columns: 1fr; }
-  .painting { order: -1; position: static; }
-  .painting img { height: 200px; max-height: none; }
-  .envelope { --flap: 60px; padding: 14px 14px 20px; }
-  .envelope::after { left: 20px; right: 20px; top: calc(-1 * var(--flap) + 14px); height: calc(var(--flap) - 14px); }
+  .envelope { padding: 14px 14px 20px; }
   .letter { padding: 28px 22px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   .mail-row { transition: none; }
 }
